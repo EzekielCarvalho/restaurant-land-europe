@@ -131,7 +131,8 @@ app.use((err, req, res, next) => {                      //This is middleware tha
     res.status(statusCode).render('error', { err })  //the status will be displayed as per the statuscode and message will be send as per the default message or depending if it was set beforehand. The entire error message will be rendered or displayed because of { err }.
 })
 
-app.listen(3000, () => {
-    console.log ('Listening on Port 3000')
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log (`Listening on Port ${port}`)
 })
 
