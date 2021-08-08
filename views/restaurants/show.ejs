@@ -1,0 +1,150 @@
+<!-- This page displays the new restaurant entry after it has been fed in via the form with a unique ID-->
+<% layout('layouts/boilerplate') %>                     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+   <link rel="stylesheet" href="/stylesheets/stars.css">    <!--connects to the stars.css file for star ratings-->
+
+ 
+    </div>
+    <style> 
+      .distance-container {
+        position: auto;
+        top: auto;
+        left: auto;
+        z-index: 1;
+      }
+       
+      .distance-container > * {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 11px;
+      line-height: 18px;
+      display: block;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 3px;
+      }
+      </style>
+    <div class="row">
+
+    <div class="col-sm-6">   <!--this gives 6 columns-->
+        <div class="card mb-3">
+       
+          <div id="restaurantcarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+              <% restaurant.images.forEach((img, i) => { %>                <!--if I put "active" on one of the images, because there's a loop, all images get active status, so we use a foreach loop to get access to the index, so that we can know which image is first or second or whatever to add the class of "Active". "i" is the index area, foreach allows for an index to be set-->        
+    
+              <div class="carousel-item <%= i === 0 ? 'active' : ''%>" data-bs-interval="10000">  <!--if the current index is 0 or the first one, then set it to active, otherwise dont-->
+                <img src="<%= img.url %>" class="d-block w-100" alt="">
+              </div>
+               <% }) %> 
+            </div>
+          <%   if(restaurant.images.length > 1)  {%>    <!--if the number of images is greater than one, then show the buttons, else dont-->
+            <button class="carousel-control-prev" type="button" data-bs-target="#restaurantcarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#restaurantcarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            <% } %> 
+          </div>
+            <div class="card-body">
+              <h5 class="card-title"><%= restaurant.title %></h5>           <!-- shows the details of the title and location section based on restaurant mentioned in app.js line 35 (Restaurant defined there)-->
+              <p class="card-text"><%= restaurant.description %></p>         <!--the description is displayed-->
+            </div>
+            <ul class="list-group list-group-flush">
+        
+              <li class="list-group-item">Posted by <%= restaurant.author.username %></li>  <!--puts in the name of the author-->
+              <li class="list-group-item">Starting Price for a complete regular main course meal: €<%= restaurant.price %></li>
+
+            </ul>
+            <% if( currentUser && restaurant.author.equals(currentUser._id)) {%> <!--This step is done to hide the "edit" and "delete" buttons appropriately depending upon authorizations.  restaurant.author is from restaurant.js line 50 and currentUser is from app.js line 73. If nobody is signed in then currentUser will be undefined and the app would break hence the "currentUser &&" part is added so both cases have to be true for it to work. So if currentUser exists and if the next part is true, then it will run. The main goal here is to see if these 2 match, hence we use the .equals method. The equals() method compares two strings, and returns true if the strings are equal, and false if not.-->
+            <div class="card-body">
+                <a href="/restaurants/<%=restaurant._id%>/edit" class="card-link btn btn-warning">Edit</a>        <!--a new link directed to each ID with the newly created edit page--> 
+                <form class="d-inline" action="/restaurants/<%=restaurant._id%>?_method=DELETE" method="POST">   <!--the "d-inline" makes the form element to be inline or one next to the other-->              <!-- this uses method override. The "_method" wording depends on what was put in app.js. Currently in the "app.use" category, it was set as "_method" so the same is true here   -->           <!-- To create a form to post or send data-->
+                    <button class="btn btn-danger">Delete</button></form>          <!-- this uses method override. The "_method" wording depends on what was put in app.js. Currently in the "app.use" category, it was set as "_method" so the same is true here   -->           <!-- To create a form to post or send data-->
+            </div>
+            <% } %>
+            <div class="card-footer text-muted">
+              Where is this fabulous restaurant located?<li class="list-group-flush text-muted"><%= restaurant.location %></li>
+              </div>
+          </div>
+              
+      </div>
+      <div class="col-sm-6">     <!--This gives 6 columns-->
+      
+        <div id='cluster-map'></div>
+        <div id="distance" class="distance-container"></div>      <!--this is for adding distance measuring ability to the map-->
+        <% if(currentUser) {%> 
+        <h2>Leave a Review!</h2>
+<!--form action will send the form to the "reviews" page-->       <form action="/restaurants/<%=restaurant._id%>/reviews" method= "POST" novalidate class="mb-3 validated"> <!--validated (which is from boiler plate line 29) adds the validation features from bootstrap--><!--novalidate is a command to stop validating based on "Required"-->   <!--This is for creating the review section and rating slider-->
+    <!--     <div class="mb-3">
+          <label class="form-label"for="rating">Rating</label>
+          <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">  --> <!--type range makes the slider
+        </div> -->
+        <div class="mb-3">
+        <fieldset class="starability-growRotate">
+          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No review rating." />    <!--from https://github.com/LunarLogic/starability-->
+          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+        <div class="mb-3">    <!--margin body-->
+                <label class="form-label" for="body">Review Text</label>
+                  <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+                  <div class="valid-feedback">That's awesome!</div>           <!--validation feedback-->
+                  <div class="invalid-feedback">That's required!</div>
+
+        </div>
+        <button class="btn btn-success">Submit</button>
+      </form>
+      <% } %> 
+        <% for(let review of restaurant.reviews) { %>     <!--reviews is from the restaurantspecs.js reviews array. restaurant is from app.js  line 81 const restaurant which holds the restaurant id found .populate(reviews)-->
+          <div class="card mb-3">
+          <div class="card-body">   <!--if you're using card class from bootstrap, you have to use "card-body" inside" too-->
+            <h5 class="card-title"><%= review.author.username %></h5>   <!--adds the name of the person who posted the review-->     
+            <p class="starability-result" data-rating="<%=review.rating%>">       <!--This uses the starability.css from git (https://github.com/LunarLogic/starability) for each review of restaurant.reviews, give me the rating (AS per review.js schema) -->
+              Rated: <%=review.rating%> stars
+            </p>
+            <!-- <h6 class="card-subtitle mb-2 text-muted">By <%= review.author.username %> </h6>    adds the name of the person who posted the review -->
+            <p class="card-text">Review:<%= review.body %></p>         <!--for each review of restaurant.reviews, give me the body (AS per review.js schema)-->
+            <% if( currentUser && review.author.equals(currentUser._id)) {%> <!--This step is done to hide the "edit" and "delete" buttons appropriately depending upon authorizations.  review.author is from reviews.js line 14 and currentUser is from app.js line 73. If nobody is signed in then currentUser will be undefined and the app would break hence the "currentUser &&" part is added so both cases have to be true for it to work. So if currentUser exists and if the next part is true, then it will run. The main goal here is to see if these 2 match, hence we use the .equals method. The equals() method compares two strings, and returns true if the strings are equal, and false if not.-->
+            <form action="/restaurants/<%=restaurant._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">    <!--This is a form required because method override is used for this to delete the review. Delete uses method override, hence this form is needed. restaurant._id is the respective restaurant ID, and review._id is "Review" from the loop (let review of ...) restaurant. is from line 81 app.js-->
+            <button class="btn btn-sm btn-danger">Delete</button>     <!--delete button-->
+            </form>
+            <% } %>
+          </div>
+        </div>
+       <% }%> 
+
+</div>
+</div>
+<!--TURF IS for adding distance measuring ability to the map-->
+<script>
+  const mapToken = '<%-process.env.MAPBOX_TOKEN%>';   //This has to be before the script after this so that the token can be obtained, saved to the variable and it can be fed in showPageMap.js. This takes the token from the .env file and feeds it into mapToken, this script is going to run first here since we put it in the beginning as ejs and it will give out the token number and save it in the variable, just like any other variable that has been defined. Then I can access that in my script at showPageMap.js
+  const restaurant = <%- JSON.stringify(restaurant) %>    //this makes the geometry, coordinates, reviews, id etc to be strings but not just an object otherwise if it were just an object, it would be an error and not valid javascript
+</script>
+
+
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>     
+
+<!-- Load the `mapbox-gl-geocoder` plugin. -->  <!--This is all from mapbox to add a geocoder to the map-->
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css">
+ 
+<!-- Promise polyfill script is required -->
+<!-- to use Mapbox GL Geocoder in IE 11. -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<script src="/javascripts/showPageMap.js">    
+  </script>
+    

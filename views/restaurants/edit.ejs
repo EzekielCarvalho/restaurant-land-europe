@@ -1,0 +1,62 @@
+<!--this page is for editing entries of restaurants. It uses a post method which gets faked in actuality to do put or patches-->
+
+<% layout('layouts/boilerplate') %>                     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+
+     <div class="row">
+      <h1 class="text-center">Edit Restaurant</h1>
+      <div class="col-md-6 offset-md-3">        <!--To center the content offset by 3 MD IS MEDIUM-->
+         <form action="/restaurants/<%=restaurant._id%>?_method=PUT" method="POST" novalidate class="validated" enctype="multipart/form-data">      <!-- the enctype set here is for accepting the upload of multiple files. this uses method override. The "_method" wording depends on what was put in app.js. Currently in the "app.use" category, it was set as "_method" so the same is true here   -->           <!-- To create a form to post or send data-->
+            <div class="mb-3">          <!--margin to the bottom-->
+                  <label class="form-label" for="title">Title</label>     <!-- gives a form label from bootstrap-->
+                  <input class="form-control" type="text" id="title" name="restaurant[title]" required value="<%=restaurant.title%>">    <!--Gives a form control from bootstrap. Also To group content together *not required*-->
+                  <div class="valid-feedback">That's awesome!</div>
+                  <div class="invalid-feedback">That's required!</div>
+               </div>
+          
+               <div class="mb-3">
+                  <label class="form-label" for="location">Location</label>
+                  <input class="form-control" type="text" id="location" name="restaurant[location]" required value="<%=restaurant.location%>">    <!--To group content together *not required*-->
+                  <div class="valid-feedback">That's awesome!</div>
+                  <div class="invalid-feedback">That's required!</div>
+               </div>
+               
+              
+  
+               <div class="mb-3">
+                  <label class="form-label" for="price">Restaurant's Average Starting Price</label>
+                  <div class="input-group">
+                      <span class="input-group-text" id="price-label">€</span>            <!--span is connected to input in the form-->
+                      <input type="text" class="form-control" id="price" placeholder="0" aria-label="price" aria-describedby="price-label" name="restaurant[price]" required value="<%=restaurant.price%>">
+                      <div class="valid-feedback">That's awesome!</div>
+                      <div class="invalid-feedback">That's required!</div>
+                     </div>
+               </div>
+               <div class="mb-3">
+                  <label class="form-label" for="description">Description</label>
+                  <textarea class="form-control" type="text" id="location" name="restaurant[description]" required><%= restaurant.description %>   </textarea>  <!--To group content together *not required*. Dont use value on a text area-->
+               </div>
+               <div class="mb-3">                                                       <!--from bootstrap-->
+                  <label for="image" class="form-label">Add More Image/s</label>
+                  <input class="form-control" type="file" id="image" name="image" multiple>  <!--multiple allows us to select and upload multiple images.  this is the input for uploading images. The name attribute = 'image' is the same name given in line 20 restaurants.js for upload.single('image'). multiple is to tell that you can upload multiple images (to be used with upload.multiple)-->
+                </div>
+
+                <div class="mb-3">
+                   <%  restaurant.images.forEach(function(img, i) {%> <!--loops over all the images in restaurant, foeach is used so we get the index values-->
+               <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="" >   <!--class img-thumbnail is from bootstrap. this displays the images being looped -->
+                    <div class="form-check-inline"> <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>"> <!--for deleteImages[], go to schemas.js line 14 when an image is selected, and deleted, that deletImages[] gets filled with the filename of the image that is to be deleted, hence it's an empty array here--> <!--each image has a url and a filename. So we will use the file name to delete an image respectively-->     <!--to add a checkbox from bootstrap-->   <!--this is the id that is added and the i refers to the index of each image in the image array (line 48)-->
+                  </div>
+                  <label for="image-<%=i%>">Delete</label>     <!--to associate this delete label with each checkbox, you have to use an id for each checkbox which contains the index of each particular image in this array of images (line 46)-->
+               <% }) %> 
+                  </div>
+               <div class="mb-3">
+                  <button class="btn btn-success">Update Restaurant</button>        <!--better look for the button (success) theme, from bootstrap-->
+  
+               </div>
+            
+          </form>
+          <a href="/restaurants/<%= restaurant._id%>">Back to Restaurants</a>
+  
+      </div>
+  </div>
+  
+  

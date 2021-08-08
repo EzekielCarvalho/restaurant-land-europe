@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>                     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+
+<div class="row">
+    <h1 class="text-center">New Restaurant</h1>
+    <div class="col-md-6 offset-md-3">        <!--To center the content offset by 3-->
+        <form action="/restaurants" method="POST" novalidate class="validated" enctype="multipart/form-data">       <!--this enctype is important since we want to make the form able to send files. This value is necessary if the user will upload a file through the form. Ref to https://www.w3schools.com/tags/att_form_enctype.asp-->              <!-- To create a form to post or send data-->
+            <div class="mb-3">          <!--margin to the bottom-->
+                <label class="form-label" for="title">Title</label>     <!-- gives a form label from bootstrap-->
+                <input class="form-control" type="text" id="title" name="restaurant[title]" required>    <!--Gives a form control from bootstrap. Also To group content together *not required*-->
+                <div class="valid-feedback">That's awesome!</div>
+                <div class="invalid-feedback">That's required!</div>
+               </div>
+        
+             <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" id="location" name="restaurant[location]" required>    <!--To group content together *not required*-->
+                <div class="valid-feedback">That's awesome!</div>
+                <div class="invalid-feedback">That's required!</div>
+               </div>
+              
+     <!--         
+             <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input class="form-control" type="text" id="location" name="restaurant[image]" required>    <!--To group content together *not required*-->
+         <!--       <div class="valid-feedback">That's awesome!</div>
+                <div class="invalid-feedback">That's required!</div>
+               </div> --> 
+
+             <div class="mb-3">
+                <label class="form-label" for="price">Starting Price for a complete regular main course meal</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="price-label">€</span>            <!--span is connected to input in the form-->
+                    <input type="text" class="form-control" id="price" placeholder="0" aria-label="price" aria-describedby="price-label" name="restaurant[price]" required>
+                    <div class="valid-feedback">That's awesome!</div>
+                    <div class="invalid-feedback">That's required!</div>
+                  </div>
+             </div>
+             <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="location" name="restaurant[description]" required>  </textarea>  <!--To group content together *not required*-->
+                <div class="valid-feedback">That's awesome!</div>
+                <div class="invalid-feedback">That's required!</div>
+               </div>
+               <div class="mb-3">                                                       <!--from bootstrap-->
+                <label for="image" class="form-label">Choose Image/s</label>
+                <input class="form-control" type="file" id="image" name="image" multiple>  <!--this is the input for uploading images. The name attribute = 'image' is the same name given in line 20 restaurants.js for upload.single('image'). multiple is to tell that you can upload multiple images (to be used with upload.multiple)-->
+              </div>
+             <div class="mb-3">
+                <button class="btn btn-success">Add Restaurant</button>        <!--better look for the button (success) theme, from bootstrap-->
+
+             </div>
+          
+        </form>
+             <a href="/restaurants">All Restaurants</a>
+
+    </div>
+</div>
+

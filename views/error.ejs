@@ -1,0 +1,15 @@
+<!--This is the error template form. This is all from bootstrap-->
+
+<% layout('layouts/boilerplate') %>                     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+<div class="row">
+<div class="col-6 offset-3 mt-5">                           <!--This is to center the content-->
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading"><%=err.message%></h4>  <!--This err is from the error handler default middleware -->
+     <% if(process.env.NODE_ENV !=="production") {   %>    <!--If we are running (not in) production mode i.e. if we are in development mode. Note: process.env.NODE_ENV is an environment variable that is either in "Development mode" or "production mode".NODE_ENV refers to the "CLOUDINARY_KEY OR NAME OR SECRET" in the .env file. Right now, with working on code, we are in development mode, but after the app is deployed, we will be in production mode-->
+        <p><%= err.stack %> </p>          <!--This is the stack details error not for showing people, so this has to be removed-->
+        <% } %>     <!--IF we are NOT in production mode (line 8) i.e. we are in development mode, then the err.stack (the developer related errors will be shown). For users (who will by default be in production mode), they will not get to view the developer errors-->
+      </div>
+
+</div>
+
+</div>

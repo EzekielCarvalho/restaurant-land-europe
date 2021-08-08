@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %>                     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+  <div id="cluster-map"></div>
+<h1>All restaurants</h1>
+    <div><a href="/restaurants/new">Add restaurant</a> </div>
+  
+        <% for (let restaurant of restaurants) {%>       <!--loops over each restaurant -->
+       <div class="card mb-5">                  <!--margin bottom of 3 points-->
+           <div class="row">
+               <div class="col-md-4">           <!--takes up 4 units out of 12, basically a 3rd of the row-->
+                    <% if(restaurant.images.length) { %>    <!--if there is anything in the images array, then (next line) load the first image else if there is no image provided, then use the default provided. -->
+                <img class="img-fluid" alt="" src="<%= restaurant.images[0].url%>">     <!--This displays the first image, but In Bootstrap 4 you would use the . img-fluid class on all images you would like to be responsive. This class tells the browser not to expand the image larger than its original size using a max-width. And it also tells it to scale down the image if the browser window gets narrower than the image pixel width.-->
+                            <% } else {%>
+                                <img class="img-fluid" alt="" src="https://res.cloudinary.com/ezekielcloud/image/upload/v1626500680/RestaurantLand/boa6bovdkklazsa7op2l.jpg">     <!--This displays the image, but In Bootstrap 4 you would use the . img-fluid class on all images you would like to be responsive. This class tells the browser not to expand the image larger than its original size using a max-width. And it also tells it to scale down the image if the browser window gets narrower than the image pixel width.-->
+
+                                <% } %>                                 
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">         <!--for a card look-->
+                            <h5 class="card-title">
+                                <%= restaurant.title %>     <!--title of restaurant-->
+                            </h5>
+                            <p class="card-text"> <%= restaurant.description%></p>
+                            <p class="card-text"> 
+                                <small class="text-muted"> <%= restaurant.location%></small>  <!--lighter text, displaying the restaurant location, as small text-->
+                               </p>
+                             <a class="btn btn-success" href="/restaurants/<%= restaurant._id %>">View <%=restaurant.title%></a>          <!-- restaurant title and allows you to view each restaurant ID page-->
+                        </div>
+                      
+                    </div>
+               </div>    
+           </div>
+       </div>
+    <%} %>
+ 
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';   //This is done here so that we can use the variable name in the clusterMap.js file instead of the token ID. This has to be before the script after this so that the token can be obtained, saved to the variable and it can be fed in showPageMap.js. This takes the token from the .env file and feeds it into mapToken, this script is going to run first here since we put it in the beginning as ejs and it will give out the token number and save it in the variable, just like any other variable that has been defined. Then I can access that in my script at showPageMap.js
+        const restaurants ={features: <%- JSON.stringify(restaurants) %>} //The "features is added to conform to the format in 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'" which is from mapbox. this is for all restaurants rather than in show.ejs where it is just for one restaurant. this makes the geometry, coordinates, reviews, id etc to be strings but not just an object otherwise if it were just an object, it would be an error and not valid javascript
+      </script>
+    
+<script src="/javascripts/clusterMap.js"></script>

@@ -1,0 +1,46 @@
+<!--This is for our Register form-->
+<% layout('layouts/boilerplate') %>     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+
+<!--This is for our Register form-->
+<% layout('layouts/boilerplate') %>     <!--This is from ejs mate and refers to all the part before the body and after. So this page has just the body content in other words--> 
+
+<div class="container justify-content-center align-items-center mt-5">
+
+<div class="row mb-5 mt-5">
+  <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4 mb-5 mt-5">
+    <div class="card shadow">
+      <img src="https://images.unsplash.com/photo-1582920980795-2f97b0834c58?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80" alt="" class="card-img-top">
+     <div class="card-body">
+     
+       <h5 class="card-title">Register Here</h5>
+     
+       <form action="/register" method= "POST" novalidate class="validated"> <!--validated (which is from boiler plate line 29) adds the validation features from bootstrap--><!--novalidate is a command to stop validating based on "Required"--> 
+        <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required autofocus>    <!--To group content together *not required*-->
+            <div class="valid-feedback">That's awesome!</div>
+            <div class="invalid-feedback">That's required!</div>
+           </div>
+         
+           <div class="mb-3">
+            <label class="form-label" for="email">E-Mail</label>
+            <input class="form-control" type="email" id="email" name="email" required>    <!--To group content together *not required*-->
+            <div class="valid-feedback">That's awesome!</div>
+            <div class="invalid-feedback">That's required!</div>
+           </div>
+         
+           <div class="mb-3">
+            <label class="form-label" for="password">password</label>
+            <input class="form-control" type="password" id="password" name="password" required>    <!--To group content together *not required*-->
+            <div class="valid-feedback">That's awesome!</div>
+            <div class="invalid-feedback">That's required!</div>
+           </div>
+         <button class="w-100 btn btn-success">Register</button>
+        </form>
+
+     </div>
+    </div>
+  </div>
+</div>
+</div>
+
