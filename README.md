@@ -85,8 +85,8 @@ via the search bar.
 🧍‍♂️ **Ezekiel Carvalho**
 
 * [![carvalhosolutions](https://img.shields.io/badge/Carvalho_Solutions-000000?style=for-the-badge&logo=carvalhosolutions&logoColor=white)](https://carvalhosolutions.com/)
-* [![facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com/https:\/\/facebook.com\/EzekielCarvalho)
-* [![instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/https:\/\/instagram.com\/ezekiel_carvalho)
+* [![facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https:\/\/facebook.com\/EzekielCarvalho)
+* [![instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https:\/\/instagram.com\/ezekiel_carvalho)
 * [![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](http://linkedin.com/in/ezekiel-carvalho)
 * [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EzekielCarvalho/)
 
