@@ -60,7 +60,8 @@ via the search bar.
 
 ## Languages & Technologies Used
 
-![Version](https://img.shields.io/badge/ExpressJS-323330?style=for-the-badge&logo=expressjs&logoColor=F7DF1E)
+![Version](https://img.shields.io/badge/Express-323330?style=for-the-badge&logo=express&logoColor=F7DF1E)
+![Version](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![Version](https://img.shields.io/badge/%3C%25EJS-323330?&style=for-the-badge&logo=ejs&logoColor=white)
 ![Version](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
 ![Version](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
