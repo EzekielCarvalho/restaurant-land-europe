@@ -9,8 +9,9 @@
 
 > An application with full CRUD capabilities allowing for user interaction to register for an account,  
 post restaurant entries, upload images, leave comments, as well as search for restaurants around   
-Europe based on location or name of the restaurant. The built in maps for each entry posted based  
-on the location entered allows for interactivity to check for distances between users and the   
+Europe based on location or name of the restaurant. 
+
+> The built in maps for each entry posted based on the location entered allows for interactivity to check for distances between users and the   
 restaurants.
 
 ![Restaurant Land GIF](./images/Restaurant-LandGIF.gif "Restaurant Land gif")
